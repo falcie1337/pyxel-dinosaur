@@ -3,9 +3,11 @@ import pyxel
 
 class Player:
     def __init__(self, x, y):
-        # position and physics attributes
+        # position attributes
         self.x = x
         self.y = y
+
+        # physics attributes
         self.vy = 0
         self.GRAVITY = 0.7
         self.hold_jump = False
@@ -13,15 +15,38 @@ class Player:
         self.hold_duck = False
         self.MAX_JUMP_HOLD = 8
         self.JUMP_FORCE = 4.5
-        self.GROUND_Y = 54
+
+        # hitbox attributes
+        self.hit_width = 13
+        self.hit_height = 14
+        self.hit_offsetx = 2
+        self.hit_offsety = 2
+        self.hitbox_debug = True
 
         # state attributes
         self.is_ducking = False
         self.on_ground = False
         self.can_jump = False
 
-    def update(self):
+    def update_hitbox(self):
+        # update hitbox position
+        if self.is_ducking:
+            height = 7
+            offsety = 7
+            width = 14
+            offsetx = 3
+        else:
+            height = self.hit_height
+            offsety = self.hit_offsety
+            width = self.hit_width
+            offsetx = self.hit_offsetx
 
+        self.hitx = int(self.x + offsetx)
+        self.hity = int(self.y + offsety)
+        self.hitw = int(width)
+        self.hith = int(height)
+
+    def jump(self):
         # jumping
         if (pyxel.btnp(pyxel.KEY_SPACE) and self.can_jump or
                 pyxel.btnp(pyxel.KEY_UP) and self.can_jump):
@@ -38,6 +63,7 @@ class Player:
         else:
             self.hold_jump = False
 
+    def duck(self):
         # ducking
         if pyxel.btnp(pyxel.KEY_DOWN):
             self.is_ducking = True
@@ -48,19 +74,26 @@ class Player:
         if self.is_ducking and not self.on_ground:
             self.vy += 1
 
+    def gravity(self):
         # applying gravity
         self.vy += self.GRAVITY
         self.y += self.vy
 
         # ground collision checking
-        if self.y >= self.GROUND_Y:
-            self.y = self.GROUND_Y
+        if self.y >= 54:
+            self.y = 54
             self.vy = 0
             self.on_ground = True
             self.can_jump = True
         else:
             self.on_ground = False
             self.can_jump = False
+
+    def update(self):
+        self.jump()
+        self.duck()
+        self.gravity()
+        self.update_hitbox()
 
     def draw(self):
         # determine animation state
@@ -97,4 +130,9 @@ class Player:
             v = 16
 
         # draw the player sprite
-        pyxel.blt(self.x, self.y, 0, u, v, 16, 16, pyxel.COLOR_LIGHT_BLUE)
+        pyxel.blt(self.x, self.y, 0, u, v, 16, 16, pyxel.COLOR_PEACH)
+
+        # draw the hitbox debug
+        if self.hitbox_debug:
+            pyxel.rectb(self.hitx, self.hity, self.hitw,
+                        self.hith, pyxel.COLOR_BLACK)

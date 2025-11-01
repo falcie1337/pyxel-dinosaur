@@ -6,14 +6,14 @@ class Main:
     def __init__(self):
         pyxel.init(180, 70, display_scale=3, title="test")
         pyxel.load("my_resource.pyxres")
-        self.player = Player(60, 10)
+        self.player = Player(40, 10)
         pyxel.run(self.update, self.draw)
 
     def update(self):
         self.player.update()
 
     def draw(self):
-        pyxel.cls(pyxel.COLOR_BLACK)
+        pyxel.cls(pyxel.COLOR_WHITE)
         self.player.draw()
 
 
