@@ -60,20 +60,42 @@ class Player:
             self.can_jump = False
 
     def draw(self):
+        state = ""
         if self.on_ground and not self.is_ducking:
-            index_walk = ((pyxel.frame_count // 3) % 3) * 16
-            pyxel.blt(self.x, self.y, 0, index_walk, 0,
-                      16, 16, pyxel.COLOR_LIGHT_BLUE)
+            state = "walking"
 
         if not self.on_ground and not self.is_ducking:
+            state = "jumping"
             pyxel.blt(self.x, self.y, 0, 48, 0,
                       16, 16, pyxel.COLOR_LIGHT_BLUE)
 
         if self.is_ducking and self.on_ground:
+            state = "ducking"
             index_duck = ((pyxel.frame_count // 3) % 3) * 16
             pyxel.blt(self.x, self.y, 0, index_duck, 16,
                       16, 16, pyxel.COLOR_LIGHT_BLUE)
 
         if self.is_ducking and not self.on_ground:
+            state = "duck_jumping"
             pyxel.blt(self.x, self.y, 0, 48, 16,
                       16, 16, pyxel.COLOR_LIGHT_BLUE)
+
+        u = 0
+        v = 0
+        if state == "walking":
+            u = ((pyxel.frame_count // 3) % 3) * 16
+            v = 0
+
+        if state == "ducking":
+            u = ((pyxel.frame_count // 3) % 3) * 16
+            v = 16
+
+        if state == "jumping":
+            u = 48
+            v = 0
+
+        if state == "duck_jumping":
+            u = 48
+            v = 16
+
+        pyxel.blt(self.x, self.y, 0, u, v, 16, 16, pyxel.COLOR_LIGHT_BLUE)
