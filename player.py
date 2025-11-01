@@ -45,6 +45,9 @@ class Player:
         if pyxel.btnr(pyxel.KEY_DOWN):
             self.is_ducking = False
 
+        if self.is_ducking and not self.on_ground:
+            self.vy += 1
+
         # applying gravity
         self.vy += self.GRAVITY
         self.y += self.vy
@@ -60,6 +63,7 @@ class Player:
             self.can_jump = False
 
     def draw(self):
+        # determine animation state
         state = ""
         if self.on_ground and not self.is_ducking:
             state = "walking"
@@ -73,6 +77,7 @@ class Player:
         if self.is_ducking and not self.on_ground:
             state = "duck_jumping"
 
+        # determine which frame to draw
         u = 0
         v = 0
         if state == "walking":
@@ -91,4 +96,5 @@ class Player:
             u = 48
             v = 16
 
+        # draw the player sprite
         pyxel.blt(self.x, self.y, 0, u, v, 16, 16, pyxel.COLOR_LIGHT_BLUE)
