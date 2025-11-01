@@ -5,6 +5,7 @@ from player import Player
 class Main:
     def __init__(self):
         pyxel.init(180, 70, display_scale=3, title="test")
+        pyxel.load("my_resource.pyxres")
         self.player = Player(60, 10)
         pyxel.run(self.update, self.draw)
 
