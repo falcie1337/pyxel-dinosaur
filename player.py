@@ -66,19 +66,12 @@ class Player:
 
         if not self.on_ground and not self.is_ducking:
             state = "jumping"
-            pyxel.blt(self.x, self.y, 0, 48, 0,
-                      16, 16, pyxel.COLOR_LIGHT_BLUE)
 
         if self.is_ducking and self.on_ground:
             state = "ducking"
-            index_duck = ((pyxel.frame_count // 3) % 3) * 16
-            pyxel.blt(self.x, self.y, 0, index_duck, 16,
-                      16, 16, pyxel.COLOR_LIGHT_BLUE)
 
         if self.is_ducking and not self.on_ground:
             state = "duck_jumping"
-            pyxel.blt(self.x, self.y, 0, 48, 16,
-                      16, 16, pyxel.COLOR_LIGHT_BLUE)
 
         u = 0
         v = 0
