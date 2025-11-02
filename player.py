@@ -13,12 +13,12 @@ class Player:
         self.hold_jump = False
         self.jump_hold_timer = 0
         self.hold_duck = False
-        self.MAX_JUMP_HOLD = 8
+        self.MAX_JUMP_HOLD = 6
         self.JUMP_FORCE = 4.5
 
         # hitbox attributes
-        self.hit_width = 13
-        self.hit_height = 14
+        self.hit_width = 10
+        self.hit_height = 12
         self.hit_offsetx = 2
         self.hit_offsety = 2
         self.hitbox_debug = True
@@ -31,10 +31,10 @@ class Player:
     def update_hitbox(self):
         # update hitbox position
         if self.is_ducking:
-            height = 7
-            offsety = 7
+            height = 6
+            offsety = 8
             width = 14
-            offsetx = 3
+            offsetx = 2
         else:
             height = self.hit_height
             offsety = self.hit_offsety
@@ -54,6 +54,7 @@ class Player:
             self.hold_jump = True
             self.jump_hold_timer = 0
 
+        # variable jump height
         if (self.hold_jump and self.jump_hold_timer < self.MAX_JUMP_HOLD
             and pyxel.btn(pyxel.KEY_SPACE) or
             self.hold_jump and self.jump_hold_timer < self.MAX_JUMP_HOLD
@@ -71,6 +72,7 @@ class Player:
         if pyxel.btnr(pyxel.KEY_DOWN):
             self.is_ducking = False
 
+        # gravity adjustment when duck jumping
         if self.is_ducking and not self.on_ground:
             self.vy += 1
 
