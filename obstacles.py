@@ -25,13 +25,14 @@ class SmallCactus(Obstacle):
         super().__init__(x, speed)
         self.y = 63
         self.w = 5
-        self.h = 7
+        self.h = 5
 
     def update(self):
         super().update()
 
     def draw(self):
-        super().draw()
+        pyxel.blt(self.x, self.y - 9, 0, 16, 32, 16, 16, pyxel.COLOR_PEACH)
+        # pyxel.rectb(self.x + 5, self.y, self.w, self.h, pyxel.COLOR_RED)
 
 
 class LargeCactus(Obstacle):
@@ -45,7 +46,7 @@ class LargeCactus(Obstacle):
         super().update()
 
     def draw(self):
-        super().draw()
+        pyxel.blt(self.x - 3, self.y - 4, 0, 32, 32, 16, 16, pyxel.COLOR_PEACH)
 
 
 class SpikedBush(Obstacle):
@@ -59,7 +60,7 @@ class SpikedBush(Obstacle):
         super().update()
 
     def draw(self):
-        super().draw()
+        pyxel.blt(self.x, self.y - 3, 0, 48, 32, 16, 16, pyxel.COLOR_PEACH)
 
 
 class Pterodactyl(Obstacle):
@@ -73,4 +74,5 @@ class Pterodactyl(Obstacle):
         super().update()
 
     def draw(self):
-        super().draw()
+        pyxel.blt(self.x - 3, self.y - 8, 0, ((pyxel.frame_count // 5) %
+                  2) * 16, 48, 16, 16, pyxel.COLOR_PEACH)

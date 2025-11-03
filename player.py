@@ -21,12 +21,13 @@ class Player:
         self.hit_height = 12
         self.hit_offsetx = 2
         self.hit_offsety = 2
-        self.hitbox_debug = True
+        self.hitbox_debug = False
 
         # state attributes
         self.is_ducking = False
         self.on_ground = False
         self.can_jump = False
+        self.is_dead = False
 
     def update_hitbox(self):
         # update hitbox position
@@ -96,7 +97,6 @@ class Player:
         self.duck()
         self.gravity()
         self.update_hitbox()
-        print(self.y)
 
     def draw(self):
         # determine animation state
@@ -112,6 +112,9 @@ class Player:
 
         if self.is_ducking and not self.on_ground:
             state = "duck_jumping"
+
+        if self.is_dead:
+            state = "dead"
 
         # determine which frame to draw
         u = 0
@@ -131,6 +134,10 @@ class Player:
         if state == "duck_jumping":
             u = 48
             v = 16
+
+        if state == "dead":
+            u = 0
+            v = 32
 
         # draw the player sprite
         pyxel.blt(self.x, self.y, 0, u, v, 16, 16, pyxel.COLOR_PEACH)
