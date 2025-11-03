@@ -13,8 +13,8 @@ class Player:
         self.hold_jump = False
         self.jump_hold_timer = 0
         self.hold_duck = False
-        self.MAX_JUMP_HOLD = 6
-        self.JUMP_FORCE = 4.5
+        self.MAX_JUMP_HOLD = 4
+        self.JUMP_FORCE = 3.5
 
         # hitbox attributes
         self.hit_width = 10
@@ -96,6 +96,7 @@ class Player:
         self.duck()
         self.gravity()
         self.update_hitbox()
+        print(self.y)
 
     def draw(self):
         # determine animation state

@@ -1,10 +1,11 @@
 import pyxel
+import random
 
 
 class Obstacle:
     def __init__(self, x, speed=None):
         self.x = x
-        self.vx = speed
+        self.speed = speed
         self.y = 8
         self.w = 16
         self.h = 16
@@ -13,18 +14,18 @@ class Obstacle:
         return self.x + self.w < 0
 
     def update(self):
-        self.x -= self.vx
+        self.x -= self.speed
 
     def draw(self):
-        pyxel.rect(self.x, self.y, self.w, self.h, pyxel.COLOR_BLACK)
+        pyxel.rectb(self.x, self.y, self.w, self.h, pyxel.COLOR_BLACK)
 
 
 class SmallCactus(Obstacle):
     def __init__(self, x, speed=None):
         super().__init__(x, speed)
-        self.y = 61
-        self.w = 6
-        self.h = 9
+        self.y = 63
+        self.w = 5
+        self.h = 7
 
     def update(self):
         super().update()
@@ -37,8 +38,22 @@ class LargeCactus(Obstacle):
     def __init__(self, x, speed=None):
         super().__init__(x, speed)
         self.y = 58
-        self.w = 10
-        self.h = 12
+        self.w = 8
+        self.h = 14
+
+    def update(self):
+        super().update()
+
+    def draw(self):
+        super().draw()
+
+
+class SpikedBush(Obstacle):
+    def __init__(self, x, speed=None):
+        super().__init__(x, speed)
+        self.y = 59
+        self.w = 16
+        self.h = 11
 
     def update(self):
         super().update()
@@ -50,9 +65,9 @@ class LargeCactus(Obstacle):
 class Pterodactyl(Obstacle):
     def __init__(self, x, speed=None):
         super().__init__(x, speed)
-        self.y = 50
-        self.w = 13
-        self.h = 11
+        self.y = random.choices([54, 39, 60], weights=[70, 10, 20], k=1)[0]
+        self.w = 9
+        self.h = 7
 
     def update(self):
         super().update()
