@@ -2,16 +2,15 @@ import pyxel
 
 
 class Obstacle:
-    def __init__(self, x, vx):
+    def __init__(self, x, speed=None):
         self.x = x
-        self.vx = vx
+        self.vx = speed
         self.y = 8
         self.w = 16
         self.h = 16
 
     def is_offscreen(self):
-        if self.x + self.w < 0:
-            return True
+        return self.x + self.w < 0
 
     def update(self):
         self.x -= self.vx
@@ -21,10 +20,8 @@ class Obstacle:
 
 
 class SmallCactus(Obstacle):
-    def __init__(self, x, vx):
-        super().__init__(x, vx)
-        self.x = x
-        self.vx = vx
+    def __init__(self, x, speed=None):
+        super().__init__(x, speed)
         self.y = 61
         self.w = 6
         self.h = 9
@@ -37,10 +34,8 @@ class SmallCactus(Obstacle):
 
 
 class LargeCactus(Obstacle):
-    def __init__(self, x, vx):
-        super().__init__(x, vx)
-        self.x = x
-        self.vx = vx
+    def __init__(self, x, speed=None):
+        super().__init__(x, speed)
         self.y = 58
         self.w = 10
         self.h = 12
@@ -53,10 +48,8 @@ class LargeCactus(Obstacle):
 
 
 class Pterodactyl(Obstacle):
-    def __init__(self, x, vx):
-        super().__init__(x, vx)
-        self.x = x
-        self.vx = vx
+    def __init__(self, x, speed=None):
+        super().__init__(x, speed)
         self.y = 50
         self.w = 13
         self.h = 11
